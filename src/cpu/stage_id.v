@@ -79,23 +79,23 @@ module stage_id (
 	assign reg1_reg2_geu = (opv1 >= opv2);
 
 	`define SET_INST(i_alusel, i_aluop, i_inst_valid, i_re1, i_reg_addr1, i_re2, i_reg_addr2, i_we, i_reg_waddr, i_imm1, i_imm2, i_mem_offset) \
-		aluop = i_aluop; \
-		alusel = i_alusel; \
-		inst_valid = i_inst_valid; \
-		re1 = i_re1; \
-		reg_addr1 = i_reg_addr1; \
-		re2 = i_re2; \
-		reg_addr2 = i_reg_addr2; \
-		we = i_we; \
-		reg_waddr = i_reg_waddr; \
-		imm1 = i_imm1; \
-		imm2 = i_imm2; \
-		mem_offset = i_mem_offset;
+		aluop 		<= i_aluop; 		\
+		alusel 		<= i_alusel; 		\
+		inst_valid 	<= i_inst_valid; 	\
+		re1 		<= i_re1; 			\
+		reg_addr1 	<= i_reg_addr1; 	\
+		re2 		<= i_re2; 			\
+		reg_addr2 	<= i_reg_addr2; 	\
+		we 			<= i_we; 			\
+		reg_waddr 	<= i_reg_waddr; 	\
+		imm1 		<= i_imm1; 			\
+		imm2 		<= i_imm2; 			\
+		mem_offset 	<= i_mem_offset;
 
 	`define SET_BRANCH(i_br, i_br_addr, i_link_addr) \
-		br = i_br; \
-		br_addr = i_br_addr; \
-		link_addr = i_link_addr;
+		br 			<= i_br; 			\
+		br_addr 	<= i_br_addr; 		\
+		link_addr 	<= i_link_addr;
 
 	always @ (*) begin
 		if (rst) begin
