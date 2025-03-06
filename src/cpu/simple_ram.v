@@ -1,3 +1,5 @@
+// LUTRAM
+
 module simple_ram #(
 	parameter AddrBusWidth     = 16,
 	parameter DataBusByteWidth = 4

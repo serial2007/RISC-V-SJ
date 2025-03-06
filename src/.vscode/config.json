@@ -1,0 +1,8 @@
+{
+    "FPGA_Tree_TOP": {
+        "filePaths": [
+            "/home/chen/repo/RISC-V-CPU/src/cpu/cpu.v"
+        ],
+        "fileName": "cpu.v"
+    }
+}

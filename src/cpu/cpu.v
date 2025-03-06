@@ -74,7 +74,7 @@ module cpu (
 	wire [2*32-1:0] mem_w_data;
 	wire [ 2*4-1:0] mem_sel   ;
 	wire [     1:0] mem_busy  ;
-	wire [     1:0] mem_done  ;
+	wire [     1:0] mem_done  ; // 这里是不是写错了？
 
 	mem_ctrl mem_ctrl0 (
 		clk, rst,

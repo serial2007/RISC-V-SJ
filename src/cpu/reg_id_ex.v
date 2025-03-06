@@ -32,7 +32,7 @@ module reg_id_ex (
 			ex_we         <= 0;
 			ex_link_addr  <= 0;
 			ex_mem_offset <= 0;
-		end else if (!stall[2]) begin
+		end else if (!stall[2]) begin // 阻塞？
 			ex_aluop      <= id_aluop;
 			ex_alusel     <= id_alusel;
 			ex_opv1       <= id_opv1;
