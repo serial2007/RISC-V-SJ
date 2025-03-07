@@ -62,12 +62,12 @@ void Adapter::onRecv(std::uint8_t data)
 	//    env->UARTSend(data)
 	// where <data> can be a string or vector of bytes (uint8_t)
 
-	bitset<8> recv_data = data;
+	std::bitset<8> recv_data = data;
 
-	switch (recv_state) {
+	switch (recv_status) {
 	case STATUS_IDLE:
 		if (recv_data >> (PACKET_SIZE - 3) == 0b100) {
-			recv_packet_id = recv_data & 0b11111;
+			recv_packet_id = recv_data.to_ullong() & 0b11111;
 			recv_bit = 0;
 			recv_length = 0;
 			recv_status = STATUS_CHANNEL;
@@ -84,7 +84,7 @@ void Adapter::onRecv(std::uint8_t data)
 		break;
 	case STATUS_LENGTH:
 		if (recv_data >> (PACKET_SIZE - 3) == 0b110) {
-			recv_length = recv_data & 0b11111;
+			recv_length = recv_data.to_ullong() & 0b11111;
 			recv_status = STATUS_DATA;
 			std::clog << "Receive data length: " << recv_length << std::endl;
 		}
@@ -96,22 +96,22 @@ void Adapter::onRecv(std::uint8_t data)
 	case STATUS_DATA:
 		if (recv_data >> (PACKET_SIZE - 1) == 0b0) {
 			for (int i = 0; i < PACKET_SIZE - 1; ++i)
-				read_buffer[recv_bit + i] = (recv_data >> i) & 1;
+				read_buffer[recv_bit + i] = (recv_data >> i).to_ullong() & 1;
 			recv_bit += PACKET_SIZE - 1;
 			if (recv_bit >= (recv_length << 3))
 				recv_status = STATUS_END;
 		}
 		else {
-			recv_status = STAUTS_IDLE;
+			recv_status = STATUS_IDLE;
 			std::cerr << "Error: Something is going wrong at STATUS_DATA." << std::endl;
 		}
 		break;
 	case STATUS_END:
 		std::vector<std::uint8_t> get_data; 
 		if (recv_data >> (PACKET_SIZE - 3) == 0b111) {
-			if (recv_packet_id == (recv_data & 0b11111)) {
+			if (recv_packet_id == (recv_data.to_ullong() & 0b11111)) {
 				for (int i = 0; i < recv_length; ++i)
-					get_data.push_back(0xff & read_buffer << (i * 8));
+					get_data.push_back((read_buffer << (i * 8)).to_ulong() & 0xff);
 				processData(get_data);
 			}
 			else
